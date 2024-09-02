@@ -5,11 +5,12 @@ import dev.suraj.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/products/")
+@RequestMapping("/products")
 public class ProductController {
 
     //We can provide dependency via field, constructor and setter
@@ -29,7 +30,8 @@ public class ProductController {
 //    }
 
     @GetMapping
-    public void getAllProducts(){
+    public List<GenericProductDto> getAllProducts(){
+        return productService.getAllProducts();
 
     }
 
@@ -47,9 +49,10 @@ public class ProductController {
 
     }
 
-    @PostMapping()
-    public String creatProduct(){
-        return "Created new Product " + UUID.randomUUID();
+    @PostMapping
+    public GenericProductDto createProduct(@RequestBody GenericProductDto product){
+        //System.out.println(product.name);
+        return productService.createProduct(product);
 
     }
 
